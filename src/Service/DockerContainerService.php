@@ -85,13 +85,20 @@ readonly class DockerContainerService extends AbstractCommandService
     /**
      * @throws DockerCommandException
      */
-    public function runCommandInContainer(string $containerId, string $command, $shouldPrintOutput = false): void
+    public function runCommandInContainer(string $containerId, string $command, $shouldPrintOutput = false, string $user = null): void
     {
-        $commandParts = ['docker', 'exec', $containerId, ...explode(' ', $command)];
-        echo 'Running command: ' . implode(' ', $commandParts) . "\n";
+        $commandParts = ['docker', 'exec','-t'];
+
+        if ($user) {
+            $commandParts[] = '--user';
+            $commandParts[] = $user;
+        }
+        $commandParts = array_merge($commandParts, [$containerId, ...explode(' ', $command)]);
 
 
         if ($shouldPrintOutput) {
+            echo 'Running command: ' . implode(' ', $commandParts) . "\n";
+
             $process = $this->runCommand($commandParts, true);
         } else {
             $process = new Process($commandParts);
@@ -99,8 +106,8 @@ readonly class DockerContainerService extends AbstractCommandService
         }
 
         if (!$process->isSuccessful()) {
+            echo 'Error running command: ' . $process->getErrorOutput() . PHP_EOL;
             throw new DockerCommandException($command);
         }
     }
-
 }

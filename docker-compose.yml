@@ -30,6 +30,7 @@ services:
     volumes:
       - code_backend:/var/www/html
       - /var/run/docker.sock:/var/run/docker.sock
+      - /home/raizeno/.ssh:/home/appuser/.ssh
     environment:
       - DOCKER_HOST=unix:///var/run/docker.sock
     working_dir: /var/www/html
@@ -96,6 +97,20 @@ networks:
 
 
 volumes:
+#  github_ssh_key:
+#    driver_opts:
+##      type: bind
+#      type: none
+#      o: bind
+#      device: /home/raizeno/.ssh/github_rsa
+##      target: /root/.ssh/id_rsa
+##      read_only: true
+  docker_socket:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /var/run/docker.sock
   code_backend:
     driver: local
     driver_opts:

@@ -28,9 +28,10 @@ readonly class DockerVolumeService extends AbstractCommandService
     public function removeVolume(Volume $volume): void
     {
 
+        echo 'Removing volume: ' . $volume->getName() . "\n";
         $command = ['docker', 'volume', 'rm', $volume->getName()];
 
-        $process = $this->runCommand($command, true);
+        $process = $this->runCommand($command);
 
         if (!$process->isSuccessful()) {
             echo 'Error removing volume: ' . $process->getErrorOutput();

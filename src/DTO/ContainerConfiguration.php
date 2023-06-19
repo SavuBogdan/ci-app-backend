@@ -4,13 +4,35 @@ namespace App\DTO;
 
 class ContainerConfiguration
 {
+    private string $user = '1000:1000';
     private string $name;
     private string $label;
     private string $image;
 
     /** @var MountedVolume[] $volumes */
-    private array $volumes;
+    private array $volumes = [];
+
+    /** @var SourceFileMount[] $sourceFileMounts */
+    private array $sourceFileMounts = [];
     private ?string $workDir = null;
+
+    /**
+     * @return string
+     */
+    public function getUser(): string
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param string $user
+     * @return ContainerConfiguration
+     */
+    public function setUser(string $user): ContainerConfiguration
+    {
+        $this->user = $user;
+        return $this;
+    }
 
     /**
      * @return string
@@ -96,6 +118,21 @@ class ContainerConfiguration
     public function setWorkDir(string $workDir): ContainerConfiguration
     {
         $this->workDir = $workDir;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSourceFileMounts(): array
+    {
+        return $this->sourceFileMounts;
+    }
+
+
+public function addSourceFileMount(SourceFileMount $sourceFileMount): ContainerConfiguration
+    {
+        $this->sourceFileMounts[] = $sourceFileMount;
         return $this;
     }
 

@@ -1,5 +1,6 @@
 FROM php:8.2-fpm-alpine
 
+USER root
 
 ENV COMPOSER_HOME=/tmp/composer
 ENV COMPOSER_MEMORY_LIMIT=-1
@@ -16,7 +17,8 @@ RUN apk add --no-cache \
 		fcgi \
 		file \
 		gettext \
-		git
+		git \
+        openssh-client
 
 
 RUN chmod +x /usr/local/bin/install-php-extensions && \
@@ -32,6 +34,23 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 
 # Set the working directory in the container
 WORKDIR /var/www/html
+
+# Create a new user with UID 1000 and GID 1000
+RUN addgroup -g 1000 appuser && adduser -u 1000 -G appuser -s /bin/sh -D appuser
+
+# Set the ownership and permissions
+RUN chown -R appuser:appuser /var/www/html \
+    && chmod -R 755 /var/www/html
+
+# Create the .ssh directory and copy SSH configuration files
+RUN mkdir -p /home/appuser/.ssh && \
+    chmod 700 -R /home/appuser/.ssh && \
+    touch /home/appuser/.ssh/config && \
+    chmod 700 -R /home/appuser/.ssh/config
+
+
+# Switch to the appuser
+USER appuser
 
 COPY --from=composer:2.5.5 /usr/bin/composer /usr/bin/composer
 

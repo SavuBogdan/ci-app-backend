@@ -25,6 +25,13 @@ readonly class ContainerFactory extends AbstractCommandService implements Contai
         }
         $command = ['docker', 'run', '-d', '-t', '--name', $config->getName(), '--label', $config->getLabel(), ...$volumesParts];
 
+        if (!empty($config->getSourceFileMounts())) {
+            foreach ($config->getSourceFileMounts() as $sourceFileMount) {
+                $command[] = '--mount';
+                $command[] = sprintf('type=%s,source=%s,target=%s,readonly', $sourceFileMount->getType(), $sourceFileMount->getSourcePath(), $sourceFileMount->getMountPath());
+            }
+        }
+
         if (!empty($config->getWorkDir())) {
             $command[] = '-w';
             $command[] = $config->getWorkDir();
@@ -32,7 +39,12 @@ readonly class ContainerFactory extends AbstractCommandService implements Contai
 
         $command[] = $config->getImage();
 
-        $this->runCommand($command);
+        $process = $this->runCommand($command);
+
+        if (!$process->isSuccessful()) {
+            echo $process->getErrorOutput();
+        }
+
         $containerId = $this->getContainerId($config->getName());
 
 
