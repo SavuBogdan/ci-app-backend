@@ -1,23 +1,9 @@
 <?php
 
-namespace App\ApiResource;
+namespace App\Message;
 
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Post;
-use App\Controller\NotificationController;
 
-#[ApiResource(
-    operations: [
-        new Post(
-            uriTemplate: '/notify',
-            status: 201,
-            controller: NotificationController::class,
-            description: 'Create a notification',
-            name: 'notify'
-        )
-    ]
-)]
-class Notification
+class NotificationMessage
 {
     private string $ref;
     private ?string $changeRef = null;
@@ -44,9 +30,9 @@ class Notification
 
     /**
      * @param string $ref
-     * @return Notification
+     * @return NotificationMessage
      */
-    public function setRef(string $ref): Notification
+    public function setRef(string $ref): NotificationMessage
     {
         $this->ref = $ref;
         return $this;
@@ -62,9 +48,9 @@ class Notification
 
     /**
      * @param string $changeRef
-     * @return Notification
+     * @return NotificationMessage
      */
-    public function setChangeRef(string $changeRef): Notification
+    public function setChangeRef(string $changeRef): NotificationMessage
     {
         $this->changeRef = $changeRef;
         return $this;
@@ -80,9 +66,9 @@ class Notification
 
     /**
      * @param string $type
-     * @return Notification
+     * @return NotificationMessage
      */
-    public function setType(string $type): Notification
+    public function setType(string $type): NotificationMessage
     {
         $this->type = $type;
         return $this;
@@ -98,9 +84,9 @@ class Notification
 
     /**
      * @param string $before
-     * @return Notification
+     * @return NotificationMessage
      */
-    public function setBefore(string $before): Notification
+    public function setBefore(string $before): NotificationMessage
     {
         $this->before = $before;
         return $this;
@@ -116,9 +102,9 @@ class Notification
 
     /**
      * @param string $after
-     * @return Notification
+     * @return NotificationMessage
      */
-    public function setAfter(string $after): Notification
+    public function setAfter(string $after): NotificationMessage
     {
         $this->after = $after;
         return $this;
@@ -134,9 +120,9 @@ class Notification
 
     /**
      * @param string $repositoryId
-     * @return Notification
+     * @return NotificationMessage
      */
-    public function setRepositoryId(string $repositoryId): Notification
+    public function setRepositoryId(string $repositoryId): NotificationMessage
     {
         $this->repositoryId = $repositoryId;
         return $this;
@@ -152,9 +138,9 @@ class Notification
 
     /**
      * @param string $repositoryName
-     * @return Notification
+     * @return NotificationMessage
      */
-    public function setRepositoryName(string $repositoryName): Notification
+    public function setRepositoryName(string $repositoryName): NotificationMessage
     {
         $this->repositoryName = $repositoryName;
         return $this;
@@ -170,9 +156,9 @@ class Notification
 
     /**
      * @param string $cloneUrl
-     * @return Notification
+     * @return NotificationMessage
      */
-    public function setCloneUrl(string $cloneUrl): Notification
+    public function setCloneUrl(string $cloneUrl): NotificationMessage
     {
         $this->cloneUrl = $cloneUrl;
         return $this;
@@ -188,9 +174,9 @@ class Notification
 
     /**
      * @param string $cloneUrlSsh
-     * @return Notification
+     * @return NotificationMessage
      */
-    public function setCloneUrlSsh(string $cloneUrlSsh): Notification
+    public function setCloneUrlSsh(string $cloneUrlSsh): NotificationMessage
     {
         $this->cloneUrlSsh = $cloneUrlSsh;
         return $this;
@@ -206,9 +192,9 @@ class Notification
 
     /**
      * @param string $pusher
-     * @return Notification
+     * @return NotificationMessage
      */
-    public function setPusher(string $pusher): Notification
+    public function setPusher(string $pusher): NotificationMessage
     {
         $this->pusher = $pusher;
         return $this;
@@ -224,9 +210,9 @@ class Notification
 
     /**
      * @param string|null $prNumber
-     * @return Notification
+     * @return NotificationMessage
      */
-    public function setPrNumber(?string $prNumber): Notification
+    public function setPrNumber(?string $prNumber): NotificationMessage
     {
         $this->prNumber = $prNumber;
         return $this;
@@ -242,9 +228,9 @@ class Notification
 
     /**
      * @param string|null $prTitle
-     * @return Notification
+     * @return NotificationMessage
      */
-    public function setPrTitle(?string $prTitle): Notification
+    public function setPrTitle(?string $prTitle): NotificationMessage
     {
         $this->prTitle = $prTitle;
         return $this;
@@ -260,9 +246,9 @@ class Notification
 
     /**
      * @param string|null $prUrl
-     * @return Notification
+     * @return NotificationMessage
      */
-    public function setPrUrl(?string $prUrl): Notification
+    public function setPrUrl(?string $prUrl): NotificationMessage
     {
         $this->prUrl = $prUrl;
         return $this;

@@ -16,7 +16,7 @@ framework:
         routing:
 
             # Route your messages to the transports
-            'App\Message\': async
+            'App\Message\NotificationMessage': async-notifications
 
 # when@test:
 #    framework:

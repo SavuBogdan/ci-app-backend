@@ -17,39 +17,37 @@ class Build
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToMany(targetEntity: Pipeline::class, inversedBy: 'builds')]
-    private Collection $pipeline;
+    #[ORM\ManyToOne(inversedBy: 'builds')]
+    private ?Branch $branch = null;
 
-    public function __construct()
-    {
-        $this->pipeline = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'builds')]
+    private ?PullRequest $pullRequest = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Pipeline>
-     */
-    public function getPipeline(): Collection
+    public function getBranch(): ?Branch
     {
-        return $this->pipeline;
+        return $this->branch;
     }
 
-    public function addPipeline(Pipeline $pipeline): self
+    public function setBranch(?Branch $branch): self
     {
-        if (!$this->pipeline->contains($pipeline)) {
-            $this->pipeline->add($pipeline);
-        }
+        $this->branch = $branch;
 
         return $this;
     }
 
-    public function removePipeline(Pipeline $pipeline): self
+    public function getPullRequest(): ?PullRequest
     {
-        $this->pipeline->removeElement($pipeline);
+        return $this->pullRequest;
+    }
+
+    public function setPullRequest(?PullRequest $pullRequest): self
+    {
+        $this->pullRequest = $pullRequest;
 
         return $this;
     }

@@ -2,9 +2,9 @@
 
 namespace App\Builder;
 
-use App\ApiResource\NotificationMessage;
+use App\Message\NotificationMessage;
 
-class NotificationBuilder
+class NotificationMessageBuilder
 {
     const NEW_BRANCH = 'NEW_BRANCH';
     const BRANCH_PUSH = 'BRANCH_PUSH';
