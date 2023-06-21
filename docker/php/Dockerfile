@@ -29,7 +29,8 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     opcache \
     zip \
     gd \
-    xdebug
+    xdebug \
+    amqp
 
 
 # Set the working directory in the container
